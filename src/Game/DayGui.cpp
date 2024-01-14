@@ -1,3 +1,8 @@
+/**
+ * @file DayGui.cpp
+ * @brief Implementation of the DayGui class.
+ */
+
 #include "DayGui.hpp"
 #include "DayTime.hpp"
 #include "Global.hpp"
@@ -5,7 +10,9 @@
 #include "raylib.h"
 #include "raymath.h"
 
-// Constructor for the DayGui class
+/**
+ * @brief Constructor for the DayGui class.
+ */
 DayGui::DayGui() : boxes() {
   // Define initial rectangles for GUI components
   boxes.push_back(::Rectangle{25, 25, 750, 400}); // Background rectangle
@@ -17,7 +24,10 @@ DayGui::DayGui() : boxes() {
   boxes.push_back(::Rectangle{35, 340, 570, 70}); // Description box
 }
 
-// Method to display the GUI with a given transformation matrix
+/**
+ * @brief Method to display the GUI with a given transformation matrix.
+ * @param transform The transformation matrix to be applied to the GUI components.
+ */
 void DayGui::display(Matrix transform) {
   // Transform the original boxes based on the given matrix
   std::vector<::Rectangle> tBoxes = transformBoxes(transform);
@@ -51,7 +61,11 @@ void DayGui::display(Matrix transform) {
   raygui::GuiGroupBox(tBoxes[4],TextFormat("Money%10.1f",balance));
 }
 
-// Method to transform the original boxes based on a transformation matrix
+/**
+ * @brief Method to transform the original boxes based on a transformation matrix.
+ * @param m The transformation matrix.
+ * @return Transformed rectangles based on the given matrix.
+ */
 std::vector<::Rectangle> DayGui::transformBoxes(Matrix m) {
   std::vector<::Rectangle> out{};
   for (Rectangle r : boxes) {
