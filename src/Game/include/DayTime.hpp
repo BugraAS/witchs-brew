@@ -1,3 +1,8 @@
+/**
+ * @file DayTime.hpp
+ * @brief Header file for the DayTime class.
+ */
+
 #pragma once
 
 #include "EventQueue.hpp"
@@ -5,30 +10,53 @@
 #include "PotionShop.hpp"
 #include "RunnableNode.hpp"
 
-// DayTime class is derived from Node and RunnableNode, representing the daytime in the game.
+/**
+ * @class DayTime
+ * @brief Represents the daytime in the game.
+ * @details Derived from Node and RunnableNode, the DayTime class manages daytime events and logic.
+ */
 class DayTime : public Node, public RunnableNode {
 public:
-    Event startNight; // Event representing the start of the night.
+    Event startNight; ///< Event representing the start of the night.
 
 private:
-    PotionShop* shop; // Pointer to the PotionShop associated with the daytime.
+    PotionShop* shop; ///< Pointer to the PotionShop associated with the daytime.
 
 public:
-    // Function to end the day, fires the startNight event, disables the daytime, and makes it invisible.
+    /**
+     * @brief Function to end the day.
+     * @details Fires the startNight event, disables the daytime, and makes it invisible.
+     */
     void endDay();
 
-    // Initialization function for the DayTime class, takes a pointer to void as a parameter.
+    /**
+     * @brief Initialization function for the DayTime class.
+     * @param data A pointer to void.
+     * @details Overrides the virtual function from the base class.
+     */
     virtual void Init(void* data) override;
 
-    // Inline function to get a pointer to the PotionShop associated with the daytime.
+    /**
+     * @brief Inline function to get a pointer to the PotionShop associated with the daytime.
+     * @return A pointer to the PotionShop.
+     */
     inline PotionShop* getShop() const { return shop; }
 
-    // Constructor for the DayTime class, taking a PotionShop pointer as a parameter.
+    /**
+     * @brief Constructor for the DayTime class.
+     * @param shop A pointer to the PotionShop associated with the daytime.
+     */
     explicit DayTime(PotionShop* shop);
 
-    // Destructor for the DayTime class, using default implementation.
+    /**
+     * @brief Destructor for the DayTime class.
+     * @details Uses the default implementation.
+     */
     virtual ~DayTime() = default;
 
-    // Function to process the daytime logic, implementing the virtual function from the base class.
+    /**
+     * @brief Function to process the daytime logic.
+     * @details Implements the virtual function from the base class.
+     */
     virtual void process() override;
 };
