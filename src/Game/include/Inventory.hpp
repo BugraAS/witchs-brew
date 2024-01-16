@@ -1,3 +1,8 @@
+/**
+ * @file Inventory.hpp
+ * @brief Header file for the Inventory class.
+ */
+
 #pragma once
 
 #include "Item.hpp"
@@ -6,38 +11,72 @@
 #include <string>
 #include <utility>
 
-// Inventory class represents a collection of items with associated quantities.
+/**
+ * @class Inventory
+ * @brief Represents a collection of items with associated quantities.
+ */
 class Inventory {
 private:
-    std::map<Item, float> items; // Map to store items and their corresponding quantities.
+    std::map<Item, float> items; ///< Map to store items and their corresponding quantities.
 
 public:
-    // Default constructor for the Inventory class.
+    /**
+     * @brief Default constructor for the Inventory class.
+     */
     Inventory();
 
-    // Function to add a specified quantity of an item to the inventory.
+    /**
+     * @brief Function to add a specified quantity of an item to the inventory.
+     * @param item The item to add.
+     * @param quantity The quantity of the item to add.
+     */
     void addItem(Item item, float quantity);
 
-    // Function to take a specified quantity of an item from the inventory.
-    // Returns the actual quantity taken, considering the available quantity in the inventory.
+    /**
+     * @brief Function to take a specified quantity of an item from the inventory.
+     * @param item The item to take.
+     * @param quantity The quantity of the item to take.
+     * @return The actual quantity taken, considering the available quantity in the inventory.
+     */
     float takeItem(Item item, float quantity);
 
-    // Function to set the quantity of a specific item in the inventory.
-    // Overrides the quantity if the item already exists.
+    /**
+     * @brief Function to set the quantity of a specific item in the inventory.
+     * @param item The item to set.
+     * @param quantity The new quantity of the item.
+     * @details Overrides the quantity if the item already exists.
+     */
     void setItem(Item item, float quantity);
 
-    // Inline function to get a reference to the items map. (HACK: This is a potential security concern.)
+    /**
+     * @brief Inline function to get a reference to the items map.
+     * @return A reference to the map of items.
+     * @note This is a potential security concern, use with caution.
+     */
     inline std::map<Item, float>& getItems() { return items; }
 
-    // Function to remove a specific item from the inventory.
+    /**
+     * @brief Function to remove a specific item from the inventory.
+     * @param item The item to remove.
+     */
     void RemoveItem(Item item);
 
-    // Function to check if the inventory contains a specific item.
+    /**
+     * @brief Function to check if the inventory contains a specific item.
+     * @param item The item to check for.
+     * @return True if the item is present in the inventory, false otherwise.
+     */
     bool hasItem(Item item) const;
 
-    // Function to get the quantity of a specific item in the inventory.
+    /**
+     * @brief Function to get the quantity of a specific item in the inventory.
+     * @param item The item to check for quantity.
+     * @return The quantity of the specified item in the inventory.
+     */
     float getItemAmount(Item item);
 
-    // Function to clear all items from the inventory.
+    /**
+     * @brief Function to clear all items from the inventory.
+     */
     void clear();
 };
