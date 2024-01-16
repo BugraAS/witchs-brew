@@ -1,3 +1,8 @@
+/**
+ * @file NightGui.cpp
+ * @brief Implementation of the NightGui class.
+ */
+
 #include "NightGui.hpp"
 #include "Global.hpp"
 #include "InfiniteShop.hpp"
@@ -11,7 +16,12 @@
 #include <vector>
 #include "raygui-implement.h"
 
-// Function to create a list of labels for each item in the trade agent's inventory.
+/**
+ * @brief Function to create a list of labels for each item in the trade agent's inventory.
+ * @param items The vector of items for which labels need to be created.
+ * @param agent The trade agent associated with the items.
+ * @return A vector of strings containing labels for each item.
+ */
 static std::vector<std::string> createLabelList(std::vector<Item> &items, TradeAgent *agent) {
     std::vector<std::string> out{};
     for (Item item : items) {
@@ -23,7 +33,11 @@ static std::vector<std::string> createLabelList(std::vector<Item> &items, TradeA
     return out;
 }
 
-// Function to draw the upgrade menu with a list of available upgrades and their descriptions.
+/**
+ * @brief Function to draw the upgrade menu with a list of available upgrades and their descriptions.
+ * @param bounds The vector of rectangles representing the layout of GUI components.
+ * @param shop The potion shop instance.
+ */
 static inline void DrawUpgradeMenu(const std::vector<Rectangle> &bounds, PotionShop *shop) {
     // Set GUI alpha and font size
     raygui::GuiSetAlpha(0.7f);
@@ -70,7 +84,10 @@ static inline void DrawUpgradeMenu(const std::vector<Rectangle> &bounds, PotionS
     raygui::GuiSetAlpha(1.0);
 }
 
-// Constructor for the NightGui class, initializes the rectangles used for drawing.
+/**
+ * @brief Constructor for the NightGui class.
+ * @details Initializes the rectangles used for drawing.
+ */
 NightGui::NightGui() : boxes() {
     boxes.push_back(::Rectangle{25, 25, 750, 400});        // Background rectangle
     boxes.push_back(::Rectangle{15, 15, 770, 420});        // Inner encapsulating rectangle
@@ -81,7 +98,10 @@ NightGui::NightGui() : boxes() {
     boxes.push_back(::Rectangle{35, 340, 570, 70});        // Description box
 }
 
-// Function to display the night GUI, including the shop information and upgrade menu.
+/**
+ * @brief Function to display the night GUI, including the shop information and upgrade menu.
+ * @param transform The transformation matrix for GUI components.
+ */
 void NightGui::display(Matrix transform) {
     // Set GUI style and alpha
     raygui::setStyle(raygui::STYLE_CHERRY);
@@ -126,7 +146,11 @@ void NightGui::display(Matrix transform) {
     DrawUpgradeMenu(tBoxes, shop);
 }
 
-// Function to transform the rectangles based on a given matrix
+/**
+ * @brief Function to transform the rectangles based on a given matrix.
+ * @param m The transformation matrix.
+ * @return A vector of transformed rectangles.
+ */
 std::vector<::Rectangle> NightGui::transformBoxes(Matrix m) {
     std::vector<::Rectangle> out{};
     for (Rectangle r : boxes) {
