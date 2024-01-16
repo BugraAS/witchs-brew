@@ -1,3 +1,8 @@
+/**
+ * @file NightTime.hpp
+ * @brief Header file for the NightTime class.
+ */
+
 #pragma once
 
 #include "EventQueue.hpp"
@@ -5,30 +10,53 @@
 #include "PotionShop.hpp"
 #include "RunnableNode.hpp"
 
-// NightTime class is derived from Node and RunnableNode, representing the nighttime in the game.
+/**
+ * @class NightTime
+ * @brief Represents the nighttime in the game.
+ * @details Derived from Node and RunnableNode, the NightTime class manages nighttime events and logic.
+ */
 class NightTime : public Node, public RunnableNode {
 public:
-    Event startDay; // Event representing the start of the day.
+    Event startDay; ///< Event representing the start of the day.
 
 private:
-    PotionShop* shop; // Pointer to the PotionShop associated with the nighttime.
+    PotionShop* shop; ///< Pointer to the PotionShop associated with the nighttime.
 
 public:
-    // Function to end the night, fires the startDay event, disables the nighttime, and makes it invisible.
+    /**
+     * @brief Function to end the night.
+     * @details Fires the startDay event, disables the nighttime, and makes it invisible.
+     */
     void endNight();
 
-    // Initialization function for the NightTime class, takes a pointer to void as a parameter.
+    /**
+     * @brief Initialization function for the NightTime class.
+     * @param data A pointer to void, which may be used for initialization.
+     * @details Implements the virtual function from the base class.
+     */
     virtual void Init(void* data) override;
 
-    // Inline function to get a pointer to the PotionShop associated with the nighttime.
+    /**
+     * @brief Inline function to get a pointer to the PotionShop associated with the nighttime.
+     * @return A pointer to the PotionShop.
+     */
     inline PotionShop* getShop() const { return shop; }
 
-    // Constructor for the NightTime class, taking a PotionShop pointer as a parameter.
+    /**
+     * @brief Constructor for the NightTime class.
+     * @param shop A pointer to the PotionShop associated with the nighttime.
+     */
     explicit NightTime(PotionShop* shop);
 
-    // Destructor for the NightTime class, using default implementation.
+    /**
+     * @brief Destructor for the NightTime class.
+     * @details Uses default implementation.
+     */
     virtual ~NightTime() = default;
 
-    // Function to process the nighttime logic, implementing the virtual function from the base class.
+    /**
+     * @brief Function to process the nighttime logic.
+     * @details Implements the virtual function from the base class.
+     */
     virtual void process() override;
 };
