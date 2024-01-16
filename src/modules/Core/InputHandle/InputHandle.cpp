@@ -1,37 +1,61 @@
+/**
+ * @file InputHandle.hpp
+ * @brief Header file for the InputHandle class.
+ */
+
+#pragma once
+
 #include "InputHandle.hpp"
 
-// Singleton instance initialization
-InputHandle* InputHandle::singleton = nullptr;
+/**
+ * @class InputHandle
+ * @brief Singleton class for handling input events.
+ * @details The InputHandle class manages key mappings and processes input events.
+ */
+class InputHandle {
+private:
+    static InputHandle* singleton;  ///< Static pointer to the singleton instance.
 
-// Constructor: Initialize the keyMap
-InputHandle::InputHandle()
-: keyMap()
-{
-    singleton = this;
-}
+    /**
+     * @brief Constructor: Initialize the keyMap.
+     */
+    InputHandle();
 
-// Destructor: Cleanup and set the singleton instance to null
-InputHandle::~InputHandle(){
-    singleton = nullptr;
-}
+public:
+    std::map<int, std::vector<InputEvent::ENUM>> keyMap; ///< Map to store key mappings.
 
-// Process inputs - Placeholder comment for future implementation
-void InputHandle::process(){
-    //TODO: Handle inputs
-    //we will ignore this for now since everything is based on clicks
-}
+    /**
+     * @brief Destructor: Cleanup and set the singleton instance to null.
+     */
+    ~InputHandle();
 
-// Map a key to an input event type
-void InputHandle::mapKey(int keyCode, InputEvent::ENUM eventType) {
-    singleton->keyMap[keyCode] = {eventType};
-}
+    /**
+     * @brief Process inputs - Placeholder comment for future implementation.
+     * @details This function is a placeholder for handling inputs. Actual implementation is pending.
+     */
+    void process();
 
-// Unmap a key, removing it from the keyMap
-void InputHandle::unmapKey(int keyCode) {
-    singleton->keyMap.erase(keyCode);
-}
+    /**
+     * @brief Map a key to an input event type.
+     * @param keyCode The key code to be mapped.
+     * @param eventType The input event type to be associated with the key.
+     */
+    void mapKey(int keyCode, InputEvent::ENUM eventType);
 
-// Clear all key mappings from the keyMap
-void InputHandle::clearKeyMappings() {
-    singleton->keyMap.clear();
-}
+    /**
+     * @brief Unmap a key, removing it from the keyMap.
+     * @param keyCode The key code to be unmapped.
+     */
+    void unmapKey(int keyCode);
+
+    /**
+     * @brief Clear all key mappings from the keyMap.
+     */
+    void clearKeyMappings();
+
+    /**
+     * @brief Static function to get the singleton instance of InputHandle.
+     * @return Pointer to the singleton instance of InputHandle.
+     */
+    static InputHandle* getInstance() { return singleton; }
+};
