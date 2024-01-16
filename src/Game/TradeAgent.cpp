@@ -1,15 +1,32 @@
+/**
+ * @file TradeAgent.cpp
+ * @brief Implementation of the TradeAgent class.
+ */
+
 #include "TradeAgent.hpp"
 #include "Item.hpp"
 #include <utility>
 
-// Function to add an item to the TradeAgent's inventory with the specified quantity, label, and description.
+/**
+ * @brief Function to add an item to the TradeAgent's inventory.
+ * @param item The item to be added.
+ * @param quantity The quantity of the item to be added.
+ * @param label The label for the item.
+ * @param description The description for the item.
+ */
 void TradeAgent::appendItem(Item item, float quantity, std::string label, std::string description) {
     inventory.addItem(item, quantity);  // Add the item to the inventory with the specified quantity.
     labels[item] = label;               // Set the label for the item.
     descriptions[item] = description;   // Set the description for the item.
 }
 
-// Function to sell a specified quantity of an item to another TradeAgent.
+/**
+ * @brief Function to sell a specified quantity of an item to another TradeAgent.
+ * @param buyer The TradeAgent to sell the item to.
+ * @param item The item to be sold.
+ * @param quantity The quantity of the item to be sold.
+ * @return The total value of the sold items.
+ */
 float TradeAgent::sell(TradeAgent* buyer, Item item, float quantity) {
     auto demand = getDemand(item);  // Get the demand for the specified item.
     
@@ -25,12 +42,20 @@ float TradeAgent::sell(TradeAgent* buyer, Item item, float quantity) {
     return out;  // Return the total value of the sold items.
 }
 
-// Function to set the demand for a specific item, specifying what item to give in exchange and the price.
+/**
+ * @brief Function to set the demand for a specific item.
+ * @param give The item to be given in exchange.
+ * @param receive The item to be received in exchange.
+ * @param price The price for the specified item.
+ */
 void TradeAgent::setDemand(Item give, Item receive, float price) {
     demands[give] = std::pair<Item, float>{receive, price};  // Set the demand for the specified item.
 }
 
-// Function to get a list of available items in the TradeAgent's inventory.
+/**
+ * @brief Function to get a list of available items in the TradeAgent's inventory.
+ * @return A vector containing the list of available items.
+ */
 const std::vector<Item> TradeAgent::GetAvailableItems() const {
     std::vector<Item> out{};
     
