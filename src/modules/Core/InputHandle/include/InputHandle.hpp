@@ -73,6 +73,3 @@ public:
      */
     static inline InputHandle* getSingleton(){return singleton;}
 };
-
-
-

@@ -7,6 +7,7 @@
 #include <map>
 #include "Event.hpp"
 
+
 /**
  * @class EventQueue
  * @brief Singleton class for managing and processing events.
@@ -29,11 +30,6 @@ public:
      * @brief Destructor: Reset the singleton instance on destruction.
      */
     ~EventQueue();
- // Getter for the singleton instance
-    static inline EventQueue* getSingleton() { return singleton; }
-
-    // Static method to fire an event
-    static inline void fireEvent(Event event, void* data) { singleton->activeEvents.push_back({event, data}); }
 
     /**
      * @brief Activate an event with payload.
