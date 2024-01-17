@@ -5,6 +5,7 @@ https://alaula.itch.io/potion-shop
 
 ## Documentation
 
+![status](https://codedocs.xyz/BugraAS/witchs-brew.svg)
 https://codedocs.xyz/BugraAS/witchs-brew
 
 ## What is this?
