@@ -16,6 +16,60 @@
 #include "sunny/style_sunny.h"
 #include "terminal/style_terminal.h"
 
+void GuiTabBarNoClose(Rectangle bounds, const char **text, int count, int *active)
+{
+    #define RAYGUI_TABBAR_ITEM_WIDTH    160
+
+    //GuiState state = guiState;
+
+    Rectangle tabBounds = { bounds.x, bounds.y, RAYGUI_TABBAR_ITEM_WIDTH, bounds.height };
+
+    if (*active < 0) *active = 0;
+    else if (*active > count - 1) *active = count - 1;
+
+    int offsetX = 0;    // Required in case tabs go out of screen
+    offsetX = (*active + 2)*RAYGUI_TABBAR_ITEM_WIDTH - GetScreenWidth();
+    if (offsetX < 0) offsetX = 0;
+
+    bool toggle = false;    // Required for individual toggles
+
+    // Draw control
+    //--------------------------------------------------------------------
+    for (int i = 0; i < count; i++)
+    {
+        tabBounds.x = bounds.x + (RAYGUI_TABBAR_ITEM_WIDTH + 4)*i - offsetX;
+
+        if (tabBounds.x < GetScreenWidth())
+        {
+            // Draw tabs as toggle controls
+            int textAlignment = GuiGetStyle(TOGGLE, TEXT_ALIGNMENT);
+            int textPadding = GuiGetStyle(TOGGLE, TEXT_PADDING);
+            GuiSetStyle(TOGGLE, TEXT_ALIGNMENT, TEXT_ALIGN_LEFT);
+            GuiSetStyle(TOGGLE, TEXT_PADDING, 8);
+
+            if (i == (*active))
+            {
+                toggle = true;
+                GuiToggle(tabBounds, text[i], &toggle);
+            }
+            else
+            {
+                toggle = false;
+                GuiToggle(tabBounds, text[i], &toggle);
+                if (toggle) *active = i;
+            }
+
+            GuiSetStyle(TOGGLE, TEXT_PADDING, textPadding);
+            GuiSetStyle(TOGGLE, TEXT_ALIGNMENT, textAlignment);
+        }
+    }
+
+    // Draw tab-bar bottom line
+    GuiDrawRectangle(RAYGUI_CLITERAL(Rectangle){ bounds.x, bounds.y + bounds.height - 1, bounds.width, 1 }, 0, BLANK, GetColor(GuiGetStyle(TOGGLE, BORDER_COLOR_NORMAL)));
+    //--------------------------------------------------------------------
+
+}
+
 Color getStyleColor(){
     return GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR));
 }

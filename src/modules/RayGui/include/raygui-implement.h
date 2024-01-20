@@ -34,6 +34,8 @@ Color getStyleColor();
 void setFontSize(int size);
 void setStyle(GUI_STYLE styleId);
 
+void GuiTabBarNoClose(Rectangle bounds, const char **text, int count, int *active);
+
 #if defined(__cplusplus)
 }}
 #endif

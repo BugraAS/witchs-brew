@@ -89,13 +89,14 @@ static inline void DrawUpgradeMenu(const std::vector<Rectangle> &bounds, PotionS
  * @details Initializes the rectangles used for drawing.
  */
 NightGui::NightGui() : boxes() {
-    boxes.push_back(::Rectangle{25, 25, 750, 400});        // Background rectangle
-    boxes.push_back(::Rectangle{15, 15, 770, 420});        // Inner encapsulating rectangle
-    boxes.push_back(::Rectangle{800 - 170, 450 - 70, 130, 30}); // Price selector
-    boxes.push_back(::Rectangle{800 - 170, 450 - 110, 130, 30}); // Day starter
-    boxes.push_back(::Rectangle{25, 325, 750, 100});        // Bottom half
-    boxes.push_back(::Rectangle{35, 55, 730, 250});        // Upgrade list
-    boxes.push_back(::Rectangle{35, 340, 570, 70});        // Description box
+    boxes.push_back(::Rectangle{25, 25, 750, 400});        // Background rectangle // 9
+    boxes.push_back(::Rectangle{15, 15, 770, 420});        // Inner encapsulating rectangle // 1
+    boxes.push_back(::Rectangle{800 - 170, 450 - 70, 130, 30}); // Price selector // 2
+    boxes.push_back(::Rectangle{800 - 170, 450 - 110, 130, 30}); // Day starter // 3
+    boxes.push_back(::Rectangle{25, 325, 750, 100});        // Bottom half // 4
+    boxes.push_back(::Rectangle{35, 55, 730, 250});        // Upgrade list // 5
+    boxes.push_back(::Rectangle{35, 340, 570, 70});        // Description box // 6
+    boxes.push_back(::Rectangle{200, 20, 565, 30});        // Tab bar // 7
 }
 
 /**
@@ -117,14 +118,15 @@ void NightGui::display(Matrix transform) {
     DrawRectangleRec(tBoxes[1], Fade(col, alpha));
     DrawRectangleRec(tBoxes[4], ColorAlphaBlend(RAYWHITE, Fade(col, alpha), WHITE));
 
-    // Set font size for GUI elements
-    raygui::setFontSize(40);
-
     // Draw the shop title in a group box
+    raygui::setFontSize(40);
     raygui::GuiGroupBox(tBoxes[0], "the shop");
-
-    // Set font size for smaller GUI elements
     raygui::setFontSize(20);
+
+    // Draw tabs
+    const char*  names[] = {"Upgrades","Ingredients","Pricing"};
+    static int activeTab = 0;
+    raygui::GuiTabBarNoClose(tBoxes[7],names,sizeof(names)/sizeof(char*),&activeTab);
 
     // Draw the "end Night" button and handle its click event
     int ret = raygui::GuiButton(tBoxes[3], "end Night");
