@@ -74,12 +74,19 @@ static inline void DrawUpgradeMenu(const std::vector<Rectangle> &bounds, PotionS
         desc = upgShop->getDesc(upgrades[upgradeActive]);
 
     raygui::GuiSetState(raygui::STATE_FOCUSED);
+    raygui::setFontSize(25);
     raygui::GuiTextBox(bounds[6], (char *)desc.c_str(), 20, false);
+    raygui::setFontSize(30);
     raygui::GuiSetState(raygui::STATE_NORMAL);
 
+    // undo changes to the text settings
     raygui::GuiSetStyle(raygui::DEFAULT, raygui::TEXT_ALIGNMENT_VERTICAL, raygui::TEXT_ALIGN_MIDDLE);
     raygui::GuiSetStyle(raygui::DEFAULT, raygui::TEXT_ALIGNMENT, raygui::TEXT_ALIGN_CENTER);
     raygui::GuiSetStyle(raygui::DEFAULT, raygui::TEXT_WRAP_MODE, raygui::TEXT_WRAP_NONE);
+
+    // Purchase button
+    // TODO: Do something when purchase is clicked
+    raygui::GuiButton(bounds[8], "Purchase");
 
     raygui::GuiSetAlpha(1.0);
 }
@@ -89,14 +96,15 @@ static inline void DrawUpgradeMenu(const std::vector<Rectangle> &bounds, PotionS
  * @details Initializes the rectangles used for drawing.
  */
 NightGui::NightGui() : boxes() {
-    boxes.push_back(::Rectangle{25, 25, 750, 400});        // Background rectangle // 9
-    boxes.push_back(::Rectangle{15, 15, 770, 420});        // Inner encapsulating rectangle // 1
+    boxes.push_back(::Rectangle{25, 35, 750, 390});        // Inner encapsulating rectangle // 9
+    boxes.push_back(::Rectangle{15, 15, 770, 420});        // Background rectangle // 1
     boxes.push_back(::Rectangle{800 - 170, 450 - 70, 130, 30}); // Price selector // 2
     boxes.push_back(::Rectangle{800 - 170, 450 - 110, 130, 30}); // Day starter // 3
     boxes.push_back(::Rectangle{25, 325, 750, 100});        // Bottom half // 4
     boxes.push_back(::Rectangle{35, 55, 730, 250});        // Upgrade list // 5
     boxes.push_back(::Rectangle{35, 340, 570, 70});        // Description box // 6
     boxes.push_back(::Rectangle{200, 20, 565, 30});        // Tab bar // 7
+    boxes.push_back(::Rectangle{800 - 190, 450 - 110, 150, 70});        // Buy button // 8
 }
 
 /**
@@ -121,31 +129,36 @@ void NightGui::display(Matrix transform) {
     // Draw the shop title in a group box
     raygui::setFontSize(40);
     raygui::GuiGroupBox(tBoxes[0], "the shop");
-    raygui::setFontSize(20);
-
-    // Draw tabs
-    const char*  names[] = {"Upgrades","Ingredients","Pricing"};
-    static int activeTab = 0;
-    raygui::GuiTabBarNoClose(tBoxes[7],names,sizeof(names)/sizeof(char*),&activeTab);
-
-    // Draw the "end Night" button and handle its click event
-    int ret = raygui::GuiButton(tBoxes[3], "end Night");
-    if (ret)
-        static_cast<NightTime *>(parent)->endNight();
 
     // Draw the balance information in a group box
+    raygui::setFontSize(30);
     raygui::GuiGroupBox(tBoxes[4], TextFormat("Money%10.1f", balance));
 
-    // Draw and handle the price selector
-    int price = shop->getPrice();
-    int newprice = price;
-    static bool priceEdit = false;
-    priceEdit ^= raygui::GuiSpinner(tBoxes[2], nullptr, &newprice, 0, 100, priceEdit);
-    if (newprice != price)
-        shop->setPrice(static_cast<float>(newprice));
+    // Draw tabs
+    raygui::setFontSize(25);
+    const char*  names[] = {"Upgrades","Ingredients","Pricing", "Options"};
+    static int activeTab = 0;
+    raygui::GuiTabBarNoClose(tBoxes[7],names,sizeof(names)/sizeof(char*),&activeTab);
+    raygui::setFontSize(20);
+
+    // // Draw the "end Night" button and handle its click event
+    // int ret = raygui::GuiButton(tBoxes[3], "end Night");
+    // if (ret)
+    //     static_cast<NightTime *>(parent)->endNight();
+
+    // // Draw and handle the price selector
+    // int price = shop->getPrice();
+    // int newprice = price;
+    // static bool priceEdit = false;
+    // priceEdit ^= raygui::GuiSpinner(tBoxes[2], nullptr, &newprice, 0, 100, priceEdit);
+    // if (newprice != price)
+    //     shop->setPrice(static_cast<float>(newprice));
 
     // Draw the upgrade menu
-    DrawUpgradeMenu(tBoxes, shop);
+    switch (activeTab) {
+        case 0: DrawUpgradeMenu(tBoxes, shop); break;
+        default: break;
+    }
 }
 
 /**

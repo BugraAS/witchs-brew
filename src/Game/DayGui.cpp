@@ -15,8 +15,8 @@
  */
 DayGui::DayGui() : boxes() {
   // Define initial rectangles for GUI components
-  boxes.push_back(::Rectangle{25, 25, 750, 400}); // Background rectangle
-  boxes.push_back(::Rectangle{15, 15, 770, 420}); // Inner encapsulating rectangle
+  boxes.push_back(::Rectangle{25, 35, 750, 390}); // Inner encapsulating rectangle
+  boxes.push_back(::Rectangle{15, 15, 770, 420}); // Background rectangle
   boxes.push_back(::Rectangle{800-170, 450-70, 130, 30}); // Price selector
   boxes.push_back(::Rectangle{800-170, 450-110, 130, 30}); // Day starter
   boxes.push_back(::Rectangle{25, 325, 750, 100}); // Bottom half

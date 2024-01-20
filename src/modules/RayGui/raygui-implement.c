@@ -18,17 +18,17 @@
 
 void GuiTabBarNoClose(Rectangle bounds, const char **text, int count, int *active)
 {
-    #define RAYGUI_TABBAR_ITEM_WIDTH    160
+    int tabbar_item_width = (bounds.width - 4*(count - 1))/count;
 
     //GuiState state = guiState;
 
-    Rectangle tabBounds = { bounds.x, bounds.y, RAYGUI_TABBAR_ITEM_WIDTH, bounds.height };
+    Rectangle tabBounds = { bounds.x, bounds.y, tabbar_item_width, bounds.height };
 
     if (*active < 0) *active = 0;
     else if (*active > count - 1) *active = count - 1;
 
     int offsetX = 0;    // Required in case tabs go out of screen
-    offsetX = (*active + 2)*RAYGUI_TABBAR_ITEM_WIDTH - GetScreenWidth();
+    offsetX = (*active + 2)*tabbar_item_width - GetScreenWidth();
     if (offsetX < 0) offsetX = 0;
 
     bool toggle = false;    // Required for individual toggles
@@ -37,7 +37,7 @@ void GuiTabBarNoClose(Rectangle bounds, const char **text, int count, int *activ
     //--------------------------------------------------------------------
     for (int i = 0; i < count; i++)
     {
-        tabBounds.x = bounds.x + (RAYGUI_TABBAR_ITEM_WIDTH + 4)*i - offsetX;
+        tabBounds.x = bounds.x + (tabbar_item_width + 4)*i - offsetX;
 
         if (tabBounds.x < GetScreenWidth())
         {
